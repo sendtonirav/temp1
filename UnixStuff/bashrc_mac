@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#####################
+### MAC SHORTCUTS ###
+#####################
+
+
+te()
+{
+    Open /Applications/TextEdit.app $1
+}
