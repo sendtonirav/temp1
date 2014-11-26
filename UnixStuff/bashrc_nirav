@@ -4,23 +4,6 @@
 ### Nirav's .bashrc ####
 ########################
 
-##############
-### Prompt ###
-##############
-
-case “$TERM” in
-    xterm-256color)
-	PS1='[${debian_chroot:+($debian_chroot)}\[\033[00;31m\]\h\[\033[00m\]] \[\033[00;31m\]\w\[\033[00m\]\$ '
-	;;
-    xterm*)
-	PS1='[${debian_chroot:+($debian_chroot)}\[\033[00;31m\]\h\[\033[00m\]] \[\033[00;31m\]\w\[\033[00m\]\$ '
-	;;
-    *)
-	PS1='[${debian_chroot:+($debian_chroot)}\h] \w\$ '
-	;;
-esac
-
-
 ###############
 ### colors ####
 ###############
@@ -43,6 +26,29 @@ rgb_gray="\[\033[00;37m\]"
 rgb_white="\[\033[01;37m\]"
 rgb_std="${rgb_white}"
 
+##############
+### Prompt ###
+##############
+
+PS1_TITLE='\[\e]0;\h\a\]'
+PS1_STRING="[\w]"
+PS1_CHAR=" $ "
+PS1=$PS1_TITLE$rgb_red$PS1_STRING$rgb_restore$PS1_CHAR
+
+###########
+### GIT ###
+###########
+if [ -f ~/.git-completion.bash ]; then
+  source ~/.git-completion.bash
+fi
+
+if [ -f ~/.git-prompt.sh ]; then
+  GIT_PS1_SHOWUPSTREAM="auto"
+  GIT_PS1_SHOWCOLORHINTS="yes"
+  GIT_PS1_SHOWDIRTYSTATE=1
+  source ~/.git-prompt.sh
+  export PROMPT_COMMAND='__git_ps1 "$PS1_TITLE$rgb_red$PS1_STRING$rgb_restore" "$PS1_CHAR";'
+fi
 
 ####################
 ### Unix History ###
@@ -170,21 +176,6 @@ alias .....='cd ../../../..'
 alias ll='ls -lart'
 alias lld='ls -lUd */'
 alias c="clear"
-
-###########
-### GIT ###
-###########
-if [ -f ~/.git-completion.bash ]; then
-  source ~/.git-completion.bash
-fi
-
-if [ -f ~/.git-prompt.sh ]; then
-  GIT_PS1_SHOWUPSTREAM="auto"
-  GIT_PS1_SHOWCOLORHINTS="yes"
-  source ~/.git-prompt.sh
-  export PROMPT_COMMAND='__git_ps1 "\u@\h:\W" "\\\$ ";'
-fi
-
 
 ##############
 ### EDITOR ###
